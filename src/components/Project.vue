@@ -2,7 +2,7 @@
   <div id="project">
   	<div class="head">
   		<button @click="exchange1" :class="choose">ACM</button>
-  		<button @click="exchange2" :class="choose2">项目组</button>
+  		<button @click="exchange2" :class="choose2">软件开发</button>
   	</div>
   	<mt-tab-container v-model="active">
 		  <mt-tab-container-item id="tab1">
