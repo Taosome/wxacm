@@ -7,7 +7,7 @@
   	<mt-tab-container v-model="active">
 		  <mt-tab-container-item id="tab1">
 		   	<h1>OJ平台排行榜</h1>
-		   	<p><i class="iconfont icon-wodebangzhuzhongxin"></i>点击姓名以查看详细信息</p>
+		   	<p><i class="iconfont icon-wodebangzhuzhongxin"></i>点击姓名以查看详细信息(需管理员权限)</p>
 		   	<ul class="ranking">
 		   		<li class="rankHead">
 		   			<span class="rank">排名</span>
@@ -18,12 +18,20 @@
 		   		</li>
 		   		<li v-for="(info,index) in datalist" :class="join(info.lab)">
 		   			<span class="rank">{{info.rank}}</span>
-		   			<span class="name">{{info.name}}</span>
+		   			<span class="name" @click="goDetail(info.stu_id)">{{info.name}}</span>
 		   			<span class="major">{{info.major_class}}</span>
 		   			<span class="solved">{{info.solved}}</span>
 		   			<span class="acrate">{{info.acRate}}</span>
 		   		</li>
 		   	</ul>
+		   	<p class="tip">
+		   		红色代表软件开发实验室人员，绿色代表ACM实验室人员
+		   	</p>
+		   	<div class="pagination">
+		   		<i class="iconfont icon-jiantou2" @click="prev" :disabled="disabled"></i>
+		   		<span v-for="n in pages" @click="pageData(n)">{{n}}</span>
+		   		<i class="iconfont icon-jiantou" @click="next"></i>
+		   	</div>
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="tab2">
 		   	<h1>软件开发英雄帖</h1>
@@ -50,7 +58,9 @@ export default {
      choose:"curr",
      choose2:"",
      datalist:[],
-     num:1
+     num:1,
+     pages:0,
+     disabled:false
     }
   },
   methods:{
@@ -71,27 +81,63 @@ export default {
   		}else if(val=="2"){
   			return "acm"
   		}
+  	},
+  	//请求排行版数据
+  	getData(){
+  		this.$axios({
+	  		method:"get",
+	  		url:"/showFreshmanRank",
+	  		params:{
+	  			pageNum:this.num,
+	  			pageSize:10
+	  		}
+	  	}).then((res)=>{
+	  		var list=res.data.data
+	  		this.pages=res.data.totalPage
+	  		this.datalist=[];
+	  		for(var i=0;i<list.length;i++){
+	  			this.datalist.push(list[i])
+	  		}
+	  		console.log(this.datalist)
+	  	}).catch((error)=>{
+	  		console.log(error)
+	  	})
+  	},
+  	//点击页码跳转
+  	pageData(n){
+  		this.num=n;
+  		this.getData()
+  	},
+  	//前一页
+  	prev(){
+  		if(this.num==1){
+  			this.disabled=true
+  		}else{
+  			this.num=this.num-1
+  			this.disabled=false
+  			this.getData()
+  		}
+  	},
+  	//后一页
+  	next(){
+  		if(this.num==this.pages){
+  			this.disabled=true
+  		}else{
+  			this.num=this.num+1
+  			this.disabled=false
+  			this.getData()
+  		}
+  	},
+  	//点击姓名查看详情
+  	goDetail(id){
+  		this.$router.push({name:'RankDetail',params:{id:id}})
   	}
   },
   mounted(){
-  	this.$axios({
-  		method:"get",
-  		url:"/showFreshmanRank",
-  		params:{
-  			pageNum:this.num,
-  			pageSize:10
-  		}
-  	}).then((res)=>{
-  		var list=res.data.data
-  		
-  		this.datalist=[];
-  		for(var i=0;i<list.length;i++){
-  			this.datalist.push(list[i])
-  		}
-  		console.log(this.datalist)
-  	}).catch((error)=>{
-  		console.log(error)
-  	})
+  	this.getData();
+  },
+  computed:{
+
   }
 }
 </script>
@@ -99,11 +145,13 @@ export default {
 <style scoped="scoped" lang="scss">
 	#home{
 		width: 100%;
+		background: url("/static/img/wxbg2.jpg") no-repeat;
+		background-size: cover;
 		h1{
 			text-align: center;
 			font-size: 1rem;
 			margin-top: 0.5rem;
-			color: #029ce2;
+			color: #eee;
 		}
 		p{
 			width: 16.65rem;
@@ -112,7 +160,7 @@ export default {
 			margin-top: 0.3rem;
 			color: #333;
 			i{
-				color: #029CE2;
+				color: #131313;
 			}
 		}
 		.ranking{
@@ -125,6 +173,7 @@ export default {
 				border-bottom: 1px solid #d6d6d6;
 				font-size: 0.7rem;
 				line-height: 1.97rem;
+				color: #f0f0f0;
 				span{
 					display: inline-block;
 					text-align: center;
@@ -156,16 +205,33 @@ export default {
 				}
 			}
 			.acm{
-				color: #029ce2;
+				background-color: rgba(68,210,151,0.5);
 				.rank{
 					color: #666;
 				}
 			}
 			.software{
-				color: #ff4456;
+				background-color: rgba(255,68,86,0.5);
 				.rank{
 					color: #666;
 				}
+			}
+		}
+		.tip{
+			margin-top: 0rem;
+			font-size: 0.3rem;
+			color: #333;
+		}
+		//分页器
+		.pagination{
+			margin-top: 0.5rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			span{
+				font-size:0.8rem;
+				display: block;
+				margin: 0 0.25rem;
 			}
 		}
 	}

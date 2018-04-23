@@ -1,5 +1,21 @@
 <template>
   <div id="self">
+  	<p class="top">欢迎来到信息学院ACM团队微信公众号</p>
+  	<h1>个人中心</h1>
+  	<div class="main">
+  		<div class="item register">
+  			<a href="https://www.oj.swust.edu.cn/signup">点我注册</a>
+  		</div>
+  		<div class="item login">
+  			<router-link to="login">点我登录</router-link>
+  		</div>
+  		<div class="item complete">
+  			<router-link to="complete">信息完善</router-link>
+  		</div>
+  		<div class="item apply">
+  			<router-link to="apply">院赛报名</router-link>
+  		</div>
+  	</div>
     <div style="height: 2.6rem;"></div>
 		<footer>
 			<ul>
@@ -24,6 +40,45 @@ export default {
 </script>
 
 <style scoped="scoped" lang="scss">
-
+	#self{
+		width: 100%;
+		background: url("/static/img/wxbg.jpg");
+		background-size: cover;
+		overflow: hidden;
+		height: 100%;
+	}
+	.top{
+		text-align: center;
+		font-size: 1rem;
+		color: #029CE2;
+		margin-top: 0.75rem;
+	}
+	h1{
+		font-size: 1.5rem;
+		color: #eee;
+		text-align:center;
+		margin-top: 1.75rem;
+	}
+	.main{
+		margin-top: 3rem;
+		padding: 0 0.5rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		.item{
+			width: 7.75rem;
+			height: 4.75rem;
+			background: #f0f0f0;
+			text-align: center;
+			line-height: 4.75rem;
+			margin-bottom:2rem;
+			a{
+				display: block;
+				color: #029CE2;
+				border-radius: 100%;
+			}
+			border-radius: 100%;
+		}
+	}
 </style>
 
