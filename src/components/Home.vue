@@ -86,7 +86,7 @@ export default {
   	getData(){
   		this.$axios({
 	  		method:"get",
-	  		url:"/showFreshmanRank",
+	  		url:"/wxacm/showFreshmanRank",
 	  		params:{
 	  			pageNum:this.num,
 	  			pageSize:10
@@ -98,15 +98,17 @@ export default {
 	  		for(var i=0;i<list.length;i++){
 	  			this.datalist.push(list[i])
 	  		}
-	  		console.log(this.datalist)
+	  		
 	  	}).catch((error)=>{
 	  		console.log(error)
 	  	})
   	},
   	//点击页码跳转
   	pageData(n){
-  		this.num=n;
-  		this.getData()
+  		if(this.num!=n){
+  			this.num=n;
+  			this.getData()
+  		}
   	},
   	//前一页
   	prev(){
@@ -183,6 +185,7 @@ export default {
 					width: 1.9rem;
 					height: 1.9rem;
 					background: #f5f5f5;
+					color: #666;
 				}
 				.name{
 					width: 3.85rem;

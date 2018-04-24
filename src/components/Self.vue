@@ -3,18 +3,26 @@
   	<p class="top">欢迎来到信息学院ACM团队微信公众号</p>
   	<h1>个人中心</h1>
   	<div class="main">
-  		<div class="item register">
+  		<transition appear name="bounce">
+  		<div class="item register" v-if="show">
   			<a href="https://www.oj.swust.edu.cn/signup">点我注册</a>
   		</div>
-  		<div class="item login">
+  		</transition>
+  		<transition appear name="bounce">
+  		<div class="item login" v-if="show">
   			<router-link to="login">点我登录</router-link>
   		</div>
-  		<div class="item complete">
+  		</transition>
+  		<transition appear name="bounce">
+  		<div class="item complete" v-if="show">
   			<router-link to="complete">信息完善</router-link>
   		</div>
-  		<div class="item apply">
+  		</transition>
+  		<transition appear name="bounce">
+  		<div class="item apply" v-if="show">
   			<router-link to="apply">院赛报名</router-link>
   		</div>
+  		</transition>
   	</div>
     <div style="height: 2.6rem;"></div>
 		<footer>
@@ -33,7 +41,7 @@ export default {
   name: 'Self',
   data () {
     return {
-      
+      show:true
     }
   }
 }
@@ -78,6 +86,23 @@ export default {
 				border-radius: 100%;
 			}
 			border-radius: 100%;
+		}
+		.bounce-enter-active {
+		  animation: bounce-in .5s;
+		}
+		.bounce-leave-active {
+		  animation: bounce-in .5s reverse;
+		}
+		@keyframes bounce-in {
+		  0% {
+		    transform: scale(0);
+		  }
+		  50% {
+		    transform: scale(1.2);
+		  }
+		  100% {
+		    transform: scale(1);
+		  }
 		}
 	}
 </style>

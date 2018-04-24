@@ -12,5 +12,7 @@ a{text-decoration:none;}
 .clearfix:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
 html,body{height:100%;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;color: #666666;background-color:#FFFFFF !important;font-size: 20px !important;}
 a,input,textarea{-webkit-tap-highlight-color:rgba(0,0,0,0);tap-highlight-color:rgba(0,0,0,0);outline:none; -webkit-font-smoothing:antialiased}
+button{outline:none;}
 .hidden{ display:none !important;transition: .2s linear;-webkit-transition: .2s linear;}
+
 /*媒体查询*/

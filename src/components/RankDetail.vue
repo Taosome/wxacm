@@ -16,7 +16,7 @@
 			this.name==this.$route.params.id;
 			this.$axios({
 				method:"get",
-				url:"/get_user_info",
+				url:"/wxacm/getUserInfo",
 				params:{
 					username:name
 				}
