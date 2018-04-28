@@ -3,11 +3,7 @@
   	<p class="top">欢迎来到信息学院ACM团队微信公众号</p>
   	<h1>个人中心</h1>
   	<div class="main">
-  		<transition appear name="bounce">
-  		<div class="item register" v-if="show">
-  			<a href="https://www.oj.swust.edu.cn/signup">点我注册</a>
-  		</div>
-  		</transition>
+  		
   		<transition appear name="bounce">
   		<div class="item login" v-if="show">
   			<router-link to="login">点我登录</router-link>
@@ -20,7 +16,17 @@
   		</transition>
   		<transition appear name="bounce">
   		<div class="item apply" v-if="show">
-  			<router-link to="apply">院赛报名</router-link>
+  			<a href="https://www.oj.swust.edu.cn/ContestAdmin/">院赛报名</a>
+  		</div>
+  		</transition>
+  		<transition appear name="bounce">
+  		<div class="item contact" v-if="show">
+  			<router-link to="contact">联系我们</router-link>
+  		</div>
+  		</transition>
+  		<transition appear name="bounce">
+  		<div class="item control" v-if="show" v-show="rights">
+  			<router-link to="control">管理</router-link>
   		</div>
   		</transition>
   	</div>
@@ -41,7 +47,8 @@ export default {
   name: 'Self',
   data () {
     return {
-      show:true
+      show:true,
+      rights:true
     }
   }
 }
@@ -76,16 +83,27 @@ export default {
 		.item{
 			width: 7.75rem;
 			height: 4.75rem;
-			background: #f0f0f0;
+			background: url("/static/img/gas.png") no-repeat;
+			background-size: cover;
 			text-align: center;
-			line-height: 4.75rem;
+			line-height: 3.75rem;
 			margin-bottom:2rem;
 			a{
 				display: block;
-				color: #029CE2;
+				color: #fefefe;
 				border-radius: 100%;
 			}
-			border-radius: 100%;
+		}
+		.control{
+			width: 9rem;
+			height: 6rem;
+			background: url("/static/img/gas2.png") no-repeat;
+			background-size: cover;
+			line-height: 5.5rem;
+			a{
+				color: #f0f0f0;
+				font-size: 1.2rem;
+			}
 		}
 		.bounce-enter-active {
 		  animation: bounce-in .5s;

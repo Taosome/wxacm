@@ -7,7 +7,9 @@ import Self from '@/components/Self'
 import RankDetail from '@/components/RankDetail'
 import Login from '@/components/Login'
 import Complete from '@/components/Complete'
-import Apply from '@/components/Apply'
+import Contact from '@/components/Contact'
+import Control from '@/components/Control'
+import HeroDetail from '@/components/HeroDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -48,9 +50,19 @@ export default new Router({
       component: Complete
     },
     {
-      path: '/apply',
-      name: 'Apply',
-      component: Apply
+      path: '/contact',
+      name: 'Contact',
+      component: Contact
+    },
+    {
+      path: '/control',
+      name: 'Control',
+      component: Control
+    },
+    {
+      path: '/heroDetail/:heroid',
+      name: 'HeroDetail',
+      component: HeroDetail
     }
   ]
 })

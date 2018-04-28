@@ -1,14 +1,15 @@
 <template>
-	<div id="apply">
+	<div id="contact">
 		
 	</div>
 </template>
 
 <script>
 	export default{
-		name:"Apply"
+		name:"Contact"
 	}
 </script>
 
 <style scoped="scoped" lang="scss">
+
 </style>

@@ -35,6 +35,16 @@
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="tab2">
 		   	<h1>软件开发英雄帖</h1>
+		   	<dl class="hero">
+		   		<div class="question" v-for="(item,index) in datalist2" @click="heroDetail(item.hero_post_id)">
+		   			<h3>{{item.title}}</h3>
+		   			<div class="questionM">
+		   				<span class="view">浏览次数:{{item.view}}</span>
+		   				<span class="number">报名数:{{item.join_number}}</span>
+		   				<span class="join"><button>报名</button></span>
+		   			</div>
+		   		</div>
+		   	</dl>
 		  </mt-tab-container-item>
 		</mt-tab-container>
     <div style="height: 2.6rem;"></div>
@@ -60,7 +70,8 @@ export default {
      datalist:[],
      num:1,
      pages:0,
-     disabled:false
+     disabled:false,
+     datalist2:[]
     }
   },
   methods:{
@@ -92,13 +103,14 @@ export default {
 	  			pageSize:10
 	  		}
 	  	}).then((res)=>{
-	  		var list=res.data.data
-	  		this.pages=res.data.totalPage
-	  		this.datalist=[];
-	  		for(var i=0;i<list.length;i++){
-	  			this.datalist.push(list[i])
+	  		if(res.data.status==200){
+		  		var list=res.data.data
+		  		this.pages=res.data.totalPage
+		  		this.datalist=[];
+		  		for(var i=0;i<list.length;i++){
+		  			this.datalist.push(list[i])
+		  		}
 	  		}
-	  		
 	  	}).catch((error)=>{
 	  		console.log(error)
 	  	})
@@ -133,10 +145,36 @@ export default {
   	//点击姓名查看详情
   	goDetail(id){
   		this.$router.push({name:'RankDetail',params:{id:id}})
+  	},
+  	heroDetail(heroid){
+  		this.$router.push({name:'HeroDetail',params:{heroid:heroid}})
   	}
   },
   mounted(){
   	this.getData();
+  	var token;
+  	if(sessionStorage.getItem("token")){
+  		token=sessionStorage.getItem("token")
+  	}else{
+  		token=""
+  	}
+  	this.$axios({
+  		method:"post",
+  		url:"/wxsoft/heroPost",
+  		data:{
+  			token:token
+  		}
+  	}).then((res)=>{
+  		if(res.data.status==200){
+  			var list2=res.data.data
+	  		for(var i=0;i<list2.length;i++){
+	  			this.datalist2.push(list2[i])
+	  		}
+	  		console.log(this.datalist2)
+  		}
+  	}).catch((error)=>{
+  		console.log(error)
+  	})
   },
   computed:{
 
@@ -147,7 +185,9 @@ export default {
 <style scoped="scoped" lang="scss">
 	#home{
 		width: 100%;
+		height: 100%;
 		background: url("/static/img/wxbg2.jpg") no-repeat;
+		background-attachment: fixed;
 		background-size: cover;
 		h1{
 			text-align: center;
@@ -165,6 +205,7 @@ export default {
 				color: #131313;
 			}
 		}
+		//排行榜
 		.ranking{
 			width: 16.65rem;
 			margin: 0 auto;
@@ -179,7 +220,6 @@ export default {
 				span{
 					display: inline-block;
 					text-align: center;
-					
 				}
 				.rank{
 					width: 1.9rem;
@@ -235,6 +275,51 @@ export default {
 				font-size:0.8rem;
 				display: block;
 				margin: 0 0.25rem;
+			}
+		}
+		//英雄帖
+		.hero{
+			width: 16.65rem;
+			margin: 0 auto;
+			height: auto;
+			margin-top: 0.5rem;
+			margin-bottom: 2px;
+			.question{
+				padding: 0.3rem 0.2rem;
+				border: 1px solid #fefefe;
+				border-radius: 0.5rem;
+				margin-bottom: 0.25rem;
+				h3{
+					font-size: 0.9rem;
+					color: #333;
+					font-weight: normal;
+				}
+				.questionM{
+					font-size: 0.8rem;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					span{
+						display: block;
+						margin-top: 0.3rem;
+					}
+					.view{
+						width: 7rem;
+					}
+					.join{
+						width: 2.5rem;
+						height: 1.2rem;
+						button{
+							background: #029CE2;
+							color: #fefefe;
+							border: none;
+							border-radius: 1rem;
+							font-size: 0.6rem;
+							width: 100%;
+							height: 100%;
+						}
+					}
+				}
 			}
 		}
 	}
