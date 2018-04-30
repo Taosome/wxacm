@@ -4,6 +4,12 @@
 			<i class="iconfont icon-jiantou2" @click="back"></i>
 			<h2>登&nbsp;&nbsp;录</h2>
 		</div>
+		<mt-popup
+		  v-model="popupVisible"
+		  
+		  popup-transition="popup-fade">
+		  登录成功
+		</mt-popup>
 		<div class="top">
 			<img src="/static/img/school.png"/>
 		</div>
@@ -15,7 +21,7 @@
 			<div class="auto">
 				<label class="custom-checkbox"><input type="checkbox" v-model="remem"><i></i><span>记住密码</span></label>
 			</div>
-			<button @click="login">登录</button>
+			<button @click="login" :class="followed ? 'activeL' : '' ">登录</button>
 			<a href="https://www.oj.swust.edu.cn/signup">注册</a>
 		</div>
 		
@@ -23,13 +29,15 @@
 </template>
 
 <script>
+	
 	export default{
 		name:"Login",
 		data(){
 			return{
 				user:"",
 				psw:"",
-				remem:true
+				remem:1,
+				popupVisible:false
 			}
 		},
 		methods:{
@@ -46,10 +54,50 @@
 						password:this.psw
 					}
 				}).then((res)=>{
-					console.log(res)
+					if(res.data.status=200){
+						var sdata=res.data.data;
+						var info={username:this.user,name:sdata.name,token:sdata.token}
+						var rinfo={username:this.user,password:this.psw}
+						if(this.remem==0){
+							//未勾选记住密码存入sessionStorage
+							localStorage.removeItem("loginMsg")
+							var sinfo=JSON.stringify(info);
+							sessionStorage.setItem("loginMsg",sinfo);
+						}else if(this.remem==1){
+							//勾选记住密码存入localStorage和sessionStorage
+							var sinfo=JSON.stringify(info);
+							var srinfo=JSON.stringify(rinfo);
+							sessionStorage.setItem("loginMsg",sinfo);
+							localStorage.setItem("loginMsg",srinfo);
+						}
+						var roleFirst={role:sdata.role,first:sdata.firstlogin}
+						sessionStorage.setItem("roleFirst",JSON.stringify(roleFirst));
+						this.popupVisible=true;
+						var interval = window.setTimeout(()=>{
+				        	this.$router.push("/self")
+				        }, 1000);
+						
+					}
+					
 				}).catch((error)=>{
 					console.log(error)
 				})
+			}
+		},
+		created(){
+			if(localStorage.getItem("loginMsg")){
+				var msg=JSON.parse(localStorage.getItem("loginMsg"));
+				this.user=msg.username;
+				this.psw=msg.password;
+			}
+		},
+		computed:{
+			followed(){
+				if((this.user!="")&&(this.psw!="")){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}
 	}
@@ -80,6 +128,14 @@
 			text-align: center;
 			line-height: 2.6rem;
 		}
+	}
+	.mint-popup{
+		background: rgba(240,240,240,0.8);
+		color: #029CE2;
+		line-height: 2.5;
+		width: 100%;
+		text-align: center;
+		font-size: 0.8rem;
 	}
 	.top{
 		height: 5.5rem;
@@ -153,9 +209,9 @@
 			border-radius: 1rem;
 			color: #fefefe;
 			font-size: 0.9rem;
-			&:focus{
-				background: #03a9f4;
-			}
+		}
+		.activeL{
+			background: #03a9f4;
 		}
 		a{
 			display: block;

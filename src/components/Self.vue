@@ -6,7 +6,8 @@
   		
   		<transition appear name="bounce">
   		<div class="item login" v-if="show">
-  			<router-link to="login">点我登录</router-link>
+  			<router-link to="login" v-if="!someone">立即登录</router-link>
+  			<a href="javascript:void(0)" v-if="someone" @click="quit">退出登录</a>
   		</div>
   		</transition>
   		<transition appear name="bounce">
@@ -21,12 +22,8 @@
   		</transition>
   		<transition appear name="bounce">
   		<div class="item contact" v-if="show">
-  			<router-link to="contact">联系我们</router-link>
-  		</div>
-  		</transition>
-  		<transition appear name="bounce">
-  		<div class="item control" v-if="show" v-show="rights">
-  			<router-link to="control">管理</router-link>
+  			<router-link to="contact" v-if="!rights">联系我们</router-link>
+  			<router-link to="control" v-if="rights">管理信息</router-link>
   		</div>
   		</transition>
   	</div>
@@ -48,8 +45,32 @@ export default {
   data () {
     return {
       show:true,
-      rights:true
+      rights:0,
+      someone:0,
+      somebody:"Welcome"
     }
+  },
+  methods:{
+  	//退出登录
+  	quit(){
+  		sessionStorage.clear()
+  		this.$router.push("/")
+  	}
+  },
+  created(){
+  	if(sessionStorage.getItem("loginMsg")){
+  		var loginMsg=JSON.parse(sessionStorage.getItem("loginMsg"));
+  		this.someone=1;
+  		this.somebody=loginMsg.username
+  	}
+  	if(sessionStorage.getItem("roleFirst")){
+  		var roleFirst=JSON.parse(sessionStorage.getItem("roleFirst"));
+  		if(roleFirst.role==0||roleFirst.role==1){
+  			this.rights=1
+  		}else{
+  			this.rights=0
+  		}
+  	}
   }
 }
 </script>
@@ -57,7 +78,7 @@ export default {
 <style scoped="scoped" lang="scss">
 	#self{
 		width: 100%;
-		background: url("/static/img/wxbg.jpg");
+		background: url("/static/img/wxbg.jpg") no-repeat;
 		background-size: cover;
 		overflow: hidden;
 		height: 100%;
@@ -92,17 +113,6 @@ export default {
 				display: block;
 				color: #fefefe;
 				border-radius: 100%;
-			}
-		}
-		.control{
-			width: 9rem;
-			height: 6rem;
-			background: url("/static/img/gas2.png") no-repeat;
-			background-size: cover;
-			line-height: 5.5rem;
-			a{
-				color: #f0f0f0;
-				font-size: 1.2rem;
 			}
 		}
 		.bounce-enter-active {

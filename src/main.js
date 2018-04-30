@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 Vue.use(MintUI);
 //axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-axios.defaults.baseURL = 'http://cf.swustacm.cn:8083/';
+axios.defaults.baseURL = 'http://cf.swustacm.cn:8080/';
 //axios.interceptors.request.use((config) => {
 //if(config.method  === 'post'){
 //  config.data = qs.stringify(config.data);

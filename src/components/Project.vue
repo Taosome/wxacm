@@ -1,9 +1,14 @@
 <template>
   <div id="project">
   	<div class="head">
-  		<button @click="exchange1" :class="choose">ACM</button>
-  		<button @click="exchange2" :class="choose2">软件开发</button>
+  		<span><i class="iconfont icon-wode"></i>{{username}}</span>
+  		<div>
+	  		<button @click="exchange1" :class="choose">ACM</button>
+	  		<button @click="exchange2" :class="choose2">软件开发</button>
+	  	</div>
+  		<button @click="loginout" class="loginout">注销</button>
   	</div>
+  	<div style="height: 2.2rem;"></div>
   	<mt-tab-container v-model="active">
 		  <mt-tab-container-item id="tab1">
 		   	ACM团队成果展示
@@ -44,6 +49,18 @@ export default {
   		this.active="tab2"
   		this.choose2="curr",
       this.choose=""
+  	},
+  	//退出登录
+  	loginout(){
+  		sessionStorage.clear();
+  		window.location.reload();
+  	}
+  },
+  created(){
+  	if(sessionStorage.getItem("loginMsg")){
+  		var loginMsg=JSON.parse(sessionStorage.getItem("loginMsg"));
+  		this.ifUser=true;
+  		this.username=loginMsg.name
   	}
   }
 }

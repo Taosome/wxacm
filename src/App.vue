@@ -1,13 +1,23 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view @backhero="lisbh" :msg="msg"/>
   </div>
 </template>
 
 <script>
 	import Home from "@/components/Home"
 	export default {
-	  name: 'App'
+	  name: 'App',
+	  data(){
+	  	return{
+	  		msg:"tab1"
+	  	}
+	  },
+	  methods:{
+	  	lisbh(data){
+	  		this.msg=data
+	  	}
+	  }
 	}
 </script>
 
@@ -17,26 +27,55 @@
 	}
 	//类别切换
 	.head{
-		height: 2.6rem;
+		height: 2.2rem;
+		width: 100%;
 		background: #f0f0f0;
 		display: flex;
 		align-items: center;
 		box-sizing: border-box;
-		padding: 0 2.5rem;
-		justify-content: space-around;
-		button{
-			border: none;
-			width: 4rem;
-			height: 1.6rem;
-			background: #fdfdfd;
-			border-radius: 0.2rem;
+		padding: 0 0.8rem;
+		font-size: 0.6rem;
+		box-shadow: 2px 2px 2px #bdbdbd;
+		display: flex;
+		justify-content: space-between;
+		position: fixed;
+		z-index: 9999;
+		span{
+			i{
+				margin-right: 0.25rem;
+			}
+		}
+		div{
+			border-radius: 0.8rem;
+			overflow: hidden;
+			position: absolute;
+			width: 6.2rem;
+			height: 1.2rem;
+			margin: auto;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			button{
+				border: none;
+				width: 3rem;
+				height: 1.2rem;
+				background: #fdfdfd;
+				color: #029ce2;
+				font-size: 0.6rem;
+			}
+			.curr{
+				background: #029ce2;
+				color: #fefefe;
+			}
+		}
+		.loginout{
+			padding: 0.2rem 0.5rem;
+			background: #fefefe;
 			color: #029ce2;
-			font-size: 0.8rem;
+			border:1px solid #029ce2;
 		}
-		.curr{
-			background: #029ce2;
-			color: #fefefe;
-		}
+		
 	}
 	/*尾部*/
 	footer{
@@ -68,5 +107,8 @@
 			color: #029ce2;
 		}
 	}
-
+	//单选框按钮背景色
+	.mint-cell{
+		background: none;
+	}
 </style>

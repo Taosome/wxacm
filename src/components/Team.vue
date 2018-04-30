@@ -1,34 +1,49 @@
 <template>
   <div id="team">
   	<div class="head">
-  		<button @click="exchange1" :class="choose">ACM</button>
-  		<button @click="exchange2" :class="choose2">软件开发</button>
+  		<span><i class="iconfont icon-wode"></i>{{username}}</span>
+  		<div>
+	  		<button @click="exchange1" :class="choose">ACM</button>
+	  		<button @click="exchange2" :class="choose2">软件开发</button>
+	  	</div>
+  		<button @click="loginout" class="loginout">注销</button>
   	</div>
+  	<div style="height: 2.2rem;"></div>
   	<mt-tab-container v-model="active">
 		  <mt-tab-container-item id="tab1">
-		  	<p class="text">ACM实验室教练</p>
+		  	<p class="text">————&nbsp;ACM实验室教练&nbsp;————</p>
 		   	<div class="leader">
 		   		<swiper :options="swiperOption">
 					 <swiper-slide v-for="(info,index) in datalist1" :key=index>
-					 	{{info.name}}
+					 	<div class="pic">
+					 		<img :src="baseUrl+'upload/member/'+info.photo" />
+					 	</div>
+					 	<p>{{info.name}}</p>
 					 </swiper-slide>
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
 		   	</div>
-		   	<p class="text">ACM实验室历届队长</p>
+		   	<p class="text">———&nbsp;ACM实验室历届队长&nbsp;———</p>
 		   	<div class="monitor">
 		   		<swiper :options="swiperOption">
 					 <swiper-slide v-for="(info,index) in datalist2" :key=index>
-					 	{{info.name}}
+					 	<div class="pic">
+					 		<img :src="baseUrl+'upload/member/'+info.photo" />
+					 	</div>
+					 	<p><span>{{info.major_class}}</span>&nbsp;&nbsp;<span>{{info.name}}</span></p>
+					 	<b>第&nbsp;{{info.role}}&nbsp;届队长</b>
 					 </swiper-slide>
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
 		   	</div>
-		   	<p class="text">ACM实验室队员</p>
+		   	<p class="text">————&nbsp;ACM实验室队员&nbsp;————</p>
 		   	<div class="teamer">
-		   		<swiper :options="swiperOption2">
-					 <swiper-slide v-for="(info,index) in datalist3" :key=index>
-					 	{{info.name}}
+		   		<swiper :options="swiperOption2" v-for="(item,indexf) in datalist3" :key=indexf>
+					 <swiper-slide v-for="(info,index) in item" :key=index>
+					 	<div class="pic">
+					 		<img :src="baseUrl+'upload/member/'+info.photo" />
+					 	</div>
+					 		<p><span>{{info.major_class}}</span>&nbsp;&nbsp;<span>{{info.name}}</span></p>
 					 </swiper-slide>
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
@@ -39,7 +54,10 @@
 		   	<div class="leader">
 		   		<swiper :options="swiperOption">
 					 <swiper-slide v-for="(info,index) in datalist4" :key=index>
-					 	{{info.name}}
+					 	<div class="pic">
+					 		<img :src="baseUrl+'upload/member/'+info.photo" />
+					 	</div>
+					 	<p>{{info.name}}</p>
 					 </swiper-slide>
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
@@ -48,16 +66,24 @@
 		   	<div class="monitor">
 		   		<swiper :options="swiperOption">
 					 <swiper-slide v-for="(info,index) in datalist5" :key=index>
-					 	{{info.name}}
+					 	<div class="pic">
+					 		<img :src="baseUrl+'upload/member/'+info.photo" />
+					 	</div>
+					 	<p><span>{{info.major_class}}</span>&nbsp;&nbsp;<span>{{info.name}}</span></p>
+					 	<b><span>{{info.study_direction}}</span>&nbsp;&nbsp;<span>{{info.programing_language}}</span></b>
 					 </swiper-slide>
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
 		   	</div>
 		   	<p class="text">软件开发实验室本科生</p>
 		   	<div class="teamer">
-		   		<swiper :options="swiperOption2">
-					 <swiper-slide v-for="(info,index) in datalist6" :key=index>
-					 	{{info.name}}
+		   		<swiper :options="swiperOption2" v-for="(item,indexf) in datalist6" :key=indexf>
+					 <swiper-slide v-for="(info,index) in item" :key=index>
+					 	<div class="pic">
+					 		<img :src="baseUrl+'upload/member/'+info.photo" />
+					 	</div>
+					 	<p><span>{{info.major_class}}</span>&nbsp;&nbsp;<span>{{info.name}}</span></p>
+					 	<b><span>{{info.study_direction}}</span>&nbsp;&nbsp;<span>{{info.programing_language}}</span></b>
 					 </swiper-slide>
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
@@ -87,6 +113,7 @@ export default {
      active:"tab1",
      choose:"curr",
      choose2:"",
+     baseUrl:"http://cf.swustacm.cn:8080/",
      datalist1:[],
      swiperOption: {
       effect: 'cube',
@@ -96,6 +123,8 @@ export default {
         shadowOffset: 20,
         shadowScale: 1.2
       },
+      observer:true,
+      observeParents:true,
       pagination: {
         el:'.swiper-pagination'
       }
@@ -113,6 +142,8 @@ export default {
 	        modifier: 2,
 	        slideShadows : true
 	      },
+	      observer:true,
+      	observeParents:true,
 	      pagination: {
 	        el: '.swiper-pagination'
 	      }
@@ -133,6 +164,11 @@ export default {
   		this.active="tab2"
   		this.choose2="curr",
       this.choose=""
+  	},
+  	//退出登录
+  	loginout(){
+  		sessionStorage.clear();
+  		window.location.reload();
   	}
   },
   mounted(){
@@ -162,6 +198,13 @@ export default {
   	}).catch((error)=>{
 			console.log(error)
 		})
+  },
+  created(){
+  	if(sessionStorage.getItem("loginMsg")){
+  		var loginMsg=JSON.parse(sessionStorage.getItem("loginMsg"));
+  		this.ifUser=true;
+  		this.username=loginMsg.name
+  	}
   }
 }
 </script>
@@ -174,7 +217,7 @@ export default {
 		//background-size: cover;
 		.text{
 			text-align: center;
-			font-size: 1.2rem;
+			font-size: 1.0rem;
 			margin-top: 1rem;
 			color: #029CE2;
 		}
@@ -191,27 +234,98 @@ export default {
 		    top: 50%;
 		    margin-left: -6.25rem;
 		    margin-top: -6.25rem;
+		    
 		  }
 		  .swiper-slide {
+		  	display: flex;
+		  	flex-direction: column;
+		  	justify-content: space-around;
+		  	align-items: center;
 		  	background: rgba(180,226,241,0.8);
 		    background-position: center;
 		    background-size: cover;
+		    
+		    .pic{
+		    	width: 8rem;
+		    	height: 8rem;
+		    	border: 1px solid #029CE2;
+		    	overflow: hidden;
+		    	background: #fefefe;
+		    	border-radius:100%;
+		    	img{
+		    		width: 100%;
+		    	}
+		    }
+		    p{
+			  	font-size: 0.9rem;
+			  	color: #333;
+			  }
 		  }
 	  }
 	  .monitor{
 	  	@extend .leader;
+	  	display: flex;
+	  	flex-direction: column;
+	  	align-items: center;
+	  	justify-content: space-around;
+	  	.pic{
+	    	width: 8rem;
+	    	height: 8rem;
+	    	border: 1px solid #029CE2;
+	    	overflow: hidden;
+	    	background: #fefefe;
+	    	border-radius:100%;
+	    	img{
+	    		width: 100%;
+	    	}
+		  }
+		  p{
+		  	font-size: 0.9rem;
+		  	color: #333;
+		  }
+		  b{
+		  	font-size: 0.7rem;
+		  	border: 1px solid #666;
+		  }
 	  }
 	  .teamer{
 	    width: 100%;
-	    height: 12.5rem;
 	    padding-top: 1.62rem;
 	    padding-bottom: 1.62rem;
+	    .swiper-container{
+	    	margin-bottom: 3rem;
+	    }
 	    .swiper-slide {
+	    	display: flex;
+		  	flex-direction: column;
+		  	align-items: center;
+		  	justify-content: space-around;
 	    	background: rgba(180,226,241,0.8);
 		    background-position: center;
 		    background-size: cover;
 		    width: 9.37rem;
 		    height: 9.37rem;
+		    padding-bottom: 0.8rem;
+		    .pic{
+		    	width: 6rem;
+		    	height: 6rem;
+		    	border: 1px solid #029CE2;
+		    	overflow: hidden;
+		    	background: #fefefe;
+		    	border-radius:100%;
+		    	img{
+		    		width: 100%;
+		    	}
+		    }
+		    p{
+			  	font-size: 0.9rem;
+			  	color: #333;
+			  	
+			  }
+			  b{
+			  	font-size: 0.7rem;
+			  	border: 1px solid #666;
+			  }
 		  }
 	  }
 	}

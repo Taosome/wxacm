@@ -1,6 +1,10 @@
 <template>
 	<div id="heroDetail">
-		<h2>题目详细信息</h2>
+		<div class="head">
+			<i class="iconfont icon-jiantou2" @click="back"></i>
+			<h2>{{title}}</h2>
+		</div>
+		<div style="height: 2.2rem;"></div>
 		<table border="1" cellspacing="0" cellpadding="0" bordercolor="#bdbdbd">
 			<tr>
 				<td class="left">题目：</td>
@@ -34,7 +38,6 @@
 				<td class="right">{{lab}}</td>
 			</tr>
 		</table>
-		<button @click="back">返回</button>
 	</div>
 </template>
 
@@ -56,7 +59,8 @@
 		},
 		methods:{
 			back(){
-				this.$router.push("/");
+				this.$emit("backhero","tab2")
+				this.$router.go(-1)
 			}
 		},
 		mounted(){
@@ -87,15 +91,29 @@
 <style scoped="scoped" lang="scss">
 	#heroDetail{
 		height: 100%;
-		background: url("/static/img/wxbg6.jpg") no-repeat;
+		background: url("/static/img/wxbg5.jpg") no-repeat;
 		background-size: cover;
-		overflow: hidden;
-		h2{
-			text-align: center;
-			font-size: 1.3rem;
-			color: #FEFEFE;
-			font-weight: normal;
-			margin-top: 1rem;
+		padding-bottom: 0px;
+		.head{
+			display: block;
+			padding: 0 1rem;
+			position: fixed;
+			background: #f0f0f0;
+			height:2.2rem;
+			i{
+				position: absolute;
+				top: 30%;
+				font-size: 1rem;
+				color: #029CE2;
+				font-weight: bold;
+			}
+			h2{
+				font-size: 0.9rem;
+				color: #029CE2;
+				font-weight: normal;
+				text-align: center;
+				line-height: 2.2rem;
+			}
 		}
 		table{
 			width: 16.65rem;
@@ -103,6 +121,8 @@
 			height: auto;
 			margin-top: 2rem;
 			color: #111;
+			margin-bottom: 2rem;
+			background: #fefefe;
 			tr{
 				td{
 					text-align: center;
@@ -112,17 +132,18 @@
 				}
 				.left{
 					width: 5rem;
+					background: rgba(191,37,37,0.5);
 				}
 				.right{
 					width: 11.65rem;
 				}
 			}
 		}
-		button{
+		/*button{
 			display: block;
 			width: 16.65rem;
 			margin: 0 auto;
-			margin-top: 2rem;
+			margin-bottom: 0.1rem;
 			height: 2rem;
 			font-size: 0.8rem;
 			background: #f0f0f0;
@@ -130,5 +151,9 @@
 			border: none;
 			border-radius: 0.25rem;
 		}
+		.sign{
+			background: #46c6f5;
+			color: #fefefe;
+		}*/
 	}
 </style>

@@ -1,11 +1,22 @@
 <template>
   <div id="home">
   	<div class="head">
-  		<button @click="exchange1" :class="choose">ACM</button>
-  		<button @click="exchange2" :class="choose2">软件开发</button>
+  		<span><i class="iconfont icon-wode"></i>{{username}}</span>
+  		<div>
+	  		<button @click="exchange1" :class="choose">ACM</button>
+	  		<button @click="exchange2" :class="choose2">软件开发</button>
+	  	</div>
+  		<button @click="loginout" class="loginout">注销</button>
   	</div>
+  	<div style="height: 2.2rem;"></div>
   	<mt-tab-container v-model="active">
 		  <mt-tab-container-item id="tab1">
+		  	<mt-popup
+			  v-model="popupVisible"
+			  
+			  popup-transition="popup-fade">
+			  抱歉，您暂未获得管理员权限
+			</mt-popup>
 		   	<h1>OJ平台排行榜</h1>
 		   	<p><i class="iconfont icon-wodebangzhuzhongxin"></i>点击姓名以查看详细信息(需管理员权限)</p>
 		   	<ul class="ranking">
@@ -18,7 +29,7 @@
 		   		</li>
 		   		<li v-for="(info,index) in datalist" :class="join(info.lab)">
 		   			<span class="rank">{{info.rank}}</span>
-		   			<span class="name" @click="goDetail(info.stu_id)">{{info.name}}</span>
+		   			<span class="name" @click="goDetail(info.user_id)">{{info.name}}</span>
 		   			<span class="major">{{info.major_class}}</span>
 		   			<span class="solved">{{info.solved}}</span>
 		   			<span class="acrate">{{info.acRate}}</span>
@@ -62,6 +73,7 @@
 <script>
 export default {
   name: 'Home',
+  props:["msg"],
   data () {
     return {
      active:"tab1",
@@ -71,7 +83,10 @@ export default {
      num:1,
      pages:0,
      disabled:false,
-     datalist2:[]
+     datalist2:[],
+     popupVisible:false,
+     ifUser:false,
+     username:"ACMer"
     }
   },
   methods:{
@@ -93,7 +108,12 @@ export default {
   			return "acm"
   		}
   	},
-  	//请求排行版数据
+  	//退出登录
+  	loginout(){
+  		sessionStorage.clear();
+  		window.location.reload();
+  	},
+  	//请求排行榜数据
   	getData(){
   		this.$axios({
 	  		method:"get",
@@ -144,13 +164,33 @@ export default {
   	},
   	//点击姓名查看详情
   	goDetail(id){
-  		this.$router.push({name:'RankDetail',params:{id:id}})
+  		if(sessionStorage.getItem("roleFirst")){
+	  		var roleFirst=JSON.parse(sessionStorage.getItem("roleFirst"));
+	  		if(roleFirst.role==1||roleFirst.role==0){
+	  			this.$router.push({name:'RankDetail',params:{id:id}})
+	  		}else{
+	  			this.popupVisible=true;
+					var interval = window.setTimeout(()=>{
+	        	this.popupVisible=false;
+	        }, 1000);
+	  		}
+	  	}else{
+	  		this.popupVisible=true;
+	  		var interval = window.setTimeout(()=>{
+        	this.popupVisible=false;
+        }, 1000);
+	  	}
   	},
   	heroDetail(heroid){
   		this.$router.push({name:'HeroDetail',params:{heroid:heroid}})
   	}
   },
   mounted(){
+  	if(this.msg=="tab1"){
+  		this.exchange1();
+  	}else if(this.msg=="tab2"){
+  		this.exchange2();
+  	}
   	this.getData();
   	var token;
   	if(sessionStorage.getItem("token")){
@@ -170,11 +210,17 @@ export default {
 	  		for(var i=0;i<list2.length;i++){
 	  			this.datalist2.push(list2[i])
 	  		}
-	  		console.log(this.datalist2)
   		}
   	}).catch((error)=>{
   		console.log(error)
   	})
+  },
+  created(){
+  	if(sessionStorage.getItem("loginMsg")){
+  		var loginMsg=JSON.parse(sessionStorage.getItem("loginMsg"));
+  		this.ifUser=true;
+  		this.username=loginMsg.name
+  	}
   },
   computed:{
 
@@ -186,20 +232,28 @@ export default {
 	#home{
 		width: 100%;
 		height: 100%;
-		background: url("/static/img/wxbg2.jpg") no-repeat;
+		background: url("/static/img/wxbg2.jpg") no-repeat center center;
 		background-attachment: fixed;
 		background-size: cover;
+		.mint-popup{
+			background: rgba(240,240,240,0.8);
+			color: #029CE2;
+			line-height: 2.5;
+			width: 100%;
+			text-align: center;
+			font-size: 0.8rem;
+		}
 		h1{
 			text-align: center;
 			font-size: 1rem;
-			margin-top: 0.5rem;
+			margin-top: 1.2rem;
 			color: #eee;
 		}
 		p{
 			width: 16.65rem;
 			margin: 0 auto;
 			font-size: 0.4rem;
-			margin-top: 0.3rem;
+			margin-top: 0.5rem;
 			color: #333;
 			i{
 				color: #131313;
@@ -210,7 +264,7 @@ export default {
 			width: 16.65rem;
 			margin: 0 auto;
 			height: 22rem;
-			margin-top: 0.5rem;
+			margin-top: 0.3rem;
 			li{
 				height: 1.97rem;
 				border-bottom: 1px solid #d6d6d6;
@@ -267,7 +321,7 @@ export default {
 		}
 		//分页器
 		.pagination{
-			margin-top: 0.5rem;
+			margin-top: 0.4rem;
 			display: flex;
 			justify-content: center;
 			align-items: center;
