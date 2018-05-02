@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 Vue.use(MintUI);
 //axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 axios.defaults.baseURL = 'http://cf.swustacm.cn:8080/';
+//axios.defaults.baseURL = 'https://www.splayx.com:10443/jfinal-weixin';
 //axios.interceptors.request.use((config) => {
 //if(config.method  === 'post'){
 //  config.data = qs.stringify(config.data);
