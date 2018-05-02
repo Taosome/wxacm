@@ -1,9 +1,11 @@
 <template>
   <div id="self">
-  	<p class="top">欢迎来到信息学院ACM团队微信公众号</p>
-  	<h1>个人中心</h1>
+  	<p class="top">欢迎访问信息学院ACM团队微信公众号</p>
+  	<!--<h1>个人中心</h1>-->
+  	<div class="headcut">
+  		<img :src="imgSrc" onerror="this.src='/static/img/default.jpg'"/>
+  	</div>
   	<div class="main">
-  		
   		<transition appear name="bounce">
   		<div class="item login" v-if="show">
   			<router-link to="login" v-if="!someone">立即登录</router-link>
@@ -47,21 +49,24 @@ export default {
       show:true,
       rights:0,
       someone:0,
-      somebody:"Welcome"
+      somebody:"Welcome",
+      imgSrc:""
     }
   },
   methods:{
   	//退出登录
   	quit(){
   		sessionStorage.clear()
-  		this.$router.push("/")
+  		window.location.reload()
   	}
   },
   created(){
   	if(sessionStorage.getItem("loginMsg")){
   		var loginMsg=JSON.parse(sessionStorage.getItem("loginMsg"));
   		this.someone=1;
-  		this.somebody=loginMsg.username
+  		this.somebody=loginMsg.username;
+  		this.imgSrc=loginMsg.imgUrl;
+  		console.log(this.imgSrc)
   	}
   	if(sessionStorage.getItem("roleFirst")){
   		var roleFirst=JSON.parse(sessionStorage.getItem("roleFirst"));
@@ -94,6 +99,16 @@ export default {
 		color: #eee;
 		text-align:center;
 		margin-top: 1.75rem;
+	}
+	.headcut{
+		margin: 0 auto;
+		margin-top: 2rem;
+		width: 6.8rem;
+		border-radius: 100%;
+		overflow: hidden;
+		img{
+			width: 100%;
+		}
 	}
 	.main{
 		margin-top: 3rem;

@@ -5,43 +5,61 @@
 			<h2>{{title}}</h2>
 		</div>
 		<div style="height: 2.2rem;"></div>
+		<mt-popup
+		  v-model="popupVisible1"
+		  
+		  popup-transition="popup-fade">
+		  报名成功
+		</mt-popup>
+		<mt-popup
+		  v-model="popupVisible2"
+		  
+		  popup-transition="popup-fade">
+		  已报名，请尽快完成你的题目
+		</mt-popup>
 		<table border="1" cellspacing="0" cellpadding="0" bordercolor="#bdbdbd">
 			<tr>
-				<td class="left">题目：</td>
+				<td class="left">题目</td>
 				<td class="right">{{title}}</td>
 			</tr>
 			<tr>
-				<td class="left">具体要求：</td>
+				<td class="left">具体要求</td>
 				<td class="right">{{content}}</td>
 			</tr>
 			<tr>
-				<td class="left">浏览次数：</td>
+				<td class="left">浏览次数</td>
 				<td class="right">{{view}}</td>
 			</tr>
 			<tr>
-				<td class="left">报名人数：</td>
+				<td class="left">报名人数</td>
 				<td class="right">{{join_number}}</td>
 			</tr>
 			<tr>
-				<td class="left">出题人：</td>
+				<td class="left">出题人</td>
 				<td class="right">{{author}}</td>
 			</tr>
 			<tr>
-				<td class="left">联系QQ：</td>
+				<td class="left">联系QQ</td>
 				<td class="right">{{author_qq}}</td>
 			</tr>
 			<tr>
-				<td class="left">出题时间：</td>
+				<td class="left">出题时间</td>
 				<td class="right">{{time}}</td>
-			</tr><tr>
-				<td class="left">出题单位：</td>
+			</tr>
+			<tr>
+				<td class="left">出题单位</td>
 				<td class="right">{{lab}}</td>
 			</tr>
 		</table>
+		<p>示例图片</p>
+		<div class="galery" v-for="(info,index) in imgList">
+			<img :src="baseUrl+'upload/heropost/'+info.pic_name" />
+		</div>
 	</div>
 </template>
 
 <script>
+	import { MessageBox } from 'mint-ui';
 	export default{
 		name:"HeroDetail",
 		data(){
@@ -50,11 +68,17 @@
 				title:"",
 				content:"",
 				view:0,
+				join:0,
+				signed:0,
 				join_number:0,
 				author:"",
 				author_qq:0,
 				time:"",
-				lab:""
+				lab:"",
+				imgList:[],
+				baseUrl:"http://cf.swustacm.cn:8080/",
+				popupVisible1:false,
+				popupVisible2:false
 			}
 		},
 		methods:{
@@ -80,6 +104,10 @@
 					this.author_qq=sdata.author_qq;
 					this.time=sdata.time;
 					this.lab=sdata.lab;
+					var imgs=sdata.pic_list;
+					for(var i=0;i<imgs.length;i++){
+						this.imgList.push(imgs[i])
+					}
 				}
 			}).catch((error)=>{
 				console.log(error)
@@ -91,9 +119,17 @@
 <style scoped="scoped" lang="scss">
 	#heroDetail{
 		height: 100%;
-		background: url("/static/img/wxbg5.jpg") no-repeat;
-		background-size: cover;
+		//background: url("/static/img/wxbg5.jpg") no-repeat;
+		//background-size: cover;
 		padding-bottom: 0px;
+		.mint-popup{
+			background: rgba(240,240,240,0.8);
+			color: #029CE2;
+			line-height: 2.5;
+			width: 100%;
+			text-align: center;
+			font-size: 0.8rem;
+		}
 		.head{
 			display: block;
 			padding: 0 1rem;
@@ -121,7 +157,7 @@
 			height: auto;
 			margin-top: 2rem;
 			color: #111;
-			margin-bottom: 2rem;
+			margin-bottom: 0.5rem;
 			background: #fefefe;
 			tr{
 				td{
@@ -129,31 +165,42 @@
 					padding: 0.5rem 0;
 					font-size: 0.75rem;
 					line-height: 1.2;
+					button{
+						width: 80%;
+						height: 1.2rem;
+						border: none;
+						background: rgba(70,198,245,0.8);
+						border-radius: 0.2rem;
+						color: #fefefe;
+					}
 				}
 				.left{
 					width: 5rem;
-					background: rgba(191,37,37,0.5);
+					background: rgba(70,198,245,0.5);
 				}
 				.right{
 					width: 11.65rem;
 				}
 			}
 		}
-		/*button{
-			display: block;
-			width: 16.65rem;
-			margin: 0 auto;
-			margin-bottom: 0.1rem;
-			height: 2rem;
+		p{
+			padding-left: 2rem;
 			font-size: 0.8rem;
-			background: #f0f0f0;
-			color: #111;
-			border: none;
-			border-radius: 0.25rem;
+			color: #333;
+			margin-bottom: 1rem;
 		}
-		.sign{
-			background: #46c6f5;
-			color: #fefefe;
-		}*/
+		.galery{
+			width: 16rem;
+			overflow: hidden;
+			margin: 0 auto;
+			text-align: center;
+			border: 1px solid #03A9F4;
+			margin-bottom: 0.5rem;
+			img{
+				display: block;
+				width: 100%;
+				
+			}
+		}
 	}
 </style>

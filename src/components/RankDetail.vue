@@ -7,63 +7,63 @@
 		<div style="height: 2.2rem;"></div>
 		<table border="0" cellspacing="0" cellpadding="0" bordercolor="#bdbdbd">
 			<tr>
-				<td class="left">帐号：</td>
+				<td class="left">帐号</td>
 				<td class="right">{{username}}</td>
 			</tr>
 			<tr>
-				<td class="left">姓名：</td>
+				<td class="left">姓名</td>
 				<td class="right">{{name}}</td>
 			</tr>
 			<tr>
-				<td class="left">权限：</td>
-				<td class="right">{{role}}</td>
+				<td class="left">权限</td>
+				<td class="right">{{roles}}</td>
 			</tr>
 			<tr>
-				<td class="left">学号：</td>
+				<td class="left">学号</td>
 				<td class="right">{{stu_id}}</td>
 			</tr>
 			<tr>
-				<td class="left">性别：</td>
-				<td class="right">{{gender}}</td>
+				<td class="left">性别</td>
+				<td class="right">{{sex}}</td>
 			</tr>
 			<tr>
-				<td class="left">实验室：</td>
-				<td class="right">{{lab}}</td>
+				<td class="left">实验室</td>
+				<td class="right">{{labs}}</td>
 			</tr>
 			<tr>
-				<td class="left">学院：</td>
+				<td class="left">学院</td>
 				<td class="right">{{college}}</td>
 			</tr>
 			<tr>
-				<td class="left">班级：</td>
+				<td class="left">班级</td>
 				<td class="right">{{major_class}}</td>
 			</tr>
 			<tr>
-				<td class="left">入学年份：</td>
+				<td class="left">入学年份</td>
 				<td class="right">{{admission_year}}</td>
 			</tr>
 			<tr>
-				<td class="left">联系QQ：</td>
+				<td class="left">联系QQ</td>
 				<td class="right">{{qq_number}}</td>
 			</tr>
 			<tr>
-				<td class="left">电话号码：</td>
+				<td class="left">电话号码</td>
 				<td class="right">{{phone_number}}</td>
 			</tr>
 			<tr>
-				<td class="left">邮箱：</td>
+				<td class="left">邮箱</td>
 				<td class="right">{{email}}</td>
 			</tr>
 			<tr>
-				<td class="left">解题数：</td>
+				<td class="left">解题数</td>
 				<td class="right">{{solved}}</td>
 			</tr>
 			<tr>
-				<td class="left">提交总数：</td>
+				<td class="left">提交总数</td>
 				<td class="right">{{submission}}</td>
 			</tr>
 			<tr>
-				<td class="left">通过率：</td>
+				<td class="left">通过率</td>
 				<td class="right">{{acRate}}</td>
 			</tr>
 		</table>
@@ -131,6 +131,33 @@
 			}).catch((error)=>{
 				console.log(error)
 			})
+		},
+		computed:{
+			sex(){
+				if(this.gender==0){
+					return "女"
+				}else{
+					return "男"
+				}
+			},
+			roles(){
+				if(this.role==0){
+					return "超级管理员"
+				}else if(this.role==1){
+					return "管理员"
+				}else{
+					return "普通成员"
+				}
+			},
+			labs(){
+				if(this.lab==0){
+					return "暂未加入实验室"
+				}else if(this.lab==1){
+					return "软件开发实验室"
+				}else{
+					return "ACM实验室"
+				}
+			}
 		}
 	}
 </script>
@@ -180,7 +207,7 @@
 			}
 			.left{
 				width: 5rem;
-				background: rgba(191,37,37,0.5);
+				background: rgba(70,198,245,0.5);
 			}
 			.right{
 				width: 11.65rem;

@@ -14,7 +14,7 @@
 		  	<p class="text">————&nbsp;ACM实验室教练&nbsp;————</p>
 		   	<div class="leader">
 		   		<swiper :options="swiperOption">
-					 <swiper-slide v-for="(info,index) in datalist1" :key=index>
+					 <swiper-slide v-for="(info,index) in datalist1" :key=index :class="info.gender? '':'girl'">
 					 	<div class="pic">
 					 		<img :src="baseUrl+'upload/member/'+info.photo" />
 					 	</div>
@@ -26,7 +26,7 @@
 		   	<p class="text">———&nbsp;ACM实验室历届队长&nbsp;———</p>
 		   	<div class="monitor">
 		   		<swiper :options="swiperOption">
-					 <swiper-slide v-for="(info,index) in datalist2" :key=index>
+					 <swiper-slide v-for="(info,index) in datalist2" :key=index :class="info.gender? '':'girl'">
 					 	<div class="pic">
 					 		<img :src="baseUrl+'upload/member/'+info.photo" />
 					 	</div>
@@ -37,9 +37,10 @@
 					</swiper>
 		   	</div>
 		   	<p class="text">————&nbsp;ACM实验室队员&nbsp;————</p>
-		   	<div class="teamer">
-		   		<swiper :options="swiperOption2" v-for="(item,indexf) in datalist3" :key=indexf>
-					 <swiper-slide v-for="(info,index) in item" :key=index>
+		   	<div class="teamer" v-for="(item,indexf) in datalist3" :key=indexf>
+		   		<h3>第&nbsp;{{item[0].admission_year}}&nbsp;届成员</h3>
+		   		<swiper :options="swiperOption2">
+					 <swiper-slide v-for="(info,index) in item" :key=index :class="info.gender? '':'girl'">
 					 	<div class="pic">
 					 		<img :src="baseUrl+'upload/member/'+info.photo" />
 					 	</div>
@@ -50,10 +51,10 @@
 		   	</div>
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="tab2">
-		   	<p class="text">软件开发实验室教练</p>
+		   	<p class="text">———软件开发实验室教练———</p>
 		   	<div class="leader">
 		   		<swiper :options="swiperOption">
-					 <swiper-slide v-for="(info,index) in datalist4" :key=index>
+					 <swiper-slide v-for="(info,index) in datalist4" :key=index :class="info.gender? '':'girl'">
 					 	<div class="pic">
 					 		<img :src="baseUrl+'upload/member/'+info.photo" />
 					 	</div>
@@ -62,10 +63,10 @@
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
 		   	</div>
-		   	<p class="text">软件开发实验室研究生</p>
+		   	<p class="text">———软件开发实验室研究生———</p>
 		   	<div class="monitor">
 		   		<swiper :options="swiperOption">
-					 <swiper-slide v-for="(info,index) in datalist5" :key=index>
+					 <swiper-slide v-for="(info,index) in datalist5" :key=index :class="info.gender? '':'girl'">
 					 	<div class="pic">
 					 		<img :src="baseUrl+'upload/member/'+info.photo" />
 					 	</div>
@@ -75,10 +76,11 @@
 					 <div class="swiper-pagination" slot="pagination"></div>
 					</swiper>
 		   	</div>
-		   	<p class="text">软件开发实验室本科生</p>
-		   	<div class="teamer">
-		   		<swiper :options="swiperOption2" v-for="(item,indexf) in datalist6" :key=indexf>
-					 <swiper-slide v-for="(info,index) in item" :key=index>
+		   	<p class="text">———软件开发实验室本科生———</p>
+		   	<div class="teamer" v-for="(item,indexf) in datalist6" :key=indexf>
+		   		<h3>第&nbsp;{{item[0].admission_year}}&nbsp;届成员</h3>
+		   		<swiper :options="swiperOption2">
+					 <swiper-slide v-for="(info,index) in item" :key=index :class="info.gender? '':'girl'">
 					 	<div class="pic">
 					 		<img :src="baseUrl+'upload/member/'+info.photo" />
 					 	</div>
@@ -113,6 +115,7 @@ export default {
      active:"tab1",
      choose:"curr",
      choose2:"",
+     username:"ACMer",
      baseUrl:"http://cf.swustacm.cn:8080/",
      datalist1:[],
      swiperOption: {
@@ -239,7 +242,6 @@ export default {
 		  .swiper-slide {
 		  	display: flex;
 		  	flex-direction: column;
-		  	justify-content: space-around;
 		  	align-items: center;
 		  	background: rgba(180,226,241,0.8);
 		    background-position: center;
@@ -250,6 +252,8 @@ export default {
 		    	height: 8rem;
 		    	border: 1px solid #029CE2;
 		    	overflow: hidden;
+		    	margin-top: 1rem;
+		    	margin-bottom: 0.8rem;
 		    	background: #fefefe;
 		    	border-radius:100%;
 		    	img{
@@ -258,16 +262,16 @@ export default {
 		    }
 		    p{
 			  	font-size: 0.9rem;
+			  	margin-bottom: 0.2rem;
 			  	color: #333;
 			  }
+		  }
+		  .girl{
+		  	background: rgba(252,89,208,0.5);
 		  }
 	  }
 	  .monitor{
 	  	@extend .leader;
-	  	display: flex;
-	  	flex-direction: column;
-	  	align-items: center;
-	  	justify-content: space-around;
 	  	.pic{
 	    	width: 8rem;
 	    	height: 8rem;
@@ -290,16 +294,17 @@ export default {
 	  }
 	  .teamer{
 	    width: 100%;
-	    padding-top: 1.62rem;
-	    padding-bottom: 1.62rem;
-	    .swiper-container{
-	    	margin-bottom: 3rem;
+	    padding-top: 1.2rem;
+	    padding-bottom: 1.2rem;
+	    h3{
+	    	text-align: center;
+	    	font-size: 0.8rem;
+	    	margin-bottom: 0.3rem;
 	    }
 	    .swiper-slide {
 	    	display: flex;
 		  	flex-direction: column;
 		  	align-items: center;
-		  	justify-content: space-around;
 	    	background: rgba(180,226,241,0.8);
 		    background-position: center;
 		    background-size: cover;
@@ -309,6 +314,8 @@ export default {
 		    .pic{
 		    	width: 6rem;
 		    	height: 6rem;
+		    	margin-top: 0.6rem;
+		    	margin-bottom: 0.4rem;
 		    	border: 1px solid #029CE2;
 		    	overflow: hidden;
 		    	background: #fefefe;
@@ -319,6 +326,7 @@ export default {
 		    }
 		    p{
 			  	font-size: 0.9rem;
+			  	margin-bottom: 0.2rem;
 			  	color: #333;
 			  	
 			  }
@@ -326,6 +334,9 @@ export default {
 			  	font-size: 0.7rem;
 			  	border: 1px solid #666;
 			  }
+		  }
+		  .girl{
+		  	background: rgba(252,89,208,0.5);
 		  }
 	  }
 	}

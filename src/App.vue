@@ -107,7 +107,7 @@
 			color: #029ce2;
 		}
 	}
-	//单选框按钮背景色
+	//单选框按钮背景
 	.mint-cell{
 		background: none;
 	}

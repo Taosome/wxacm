@@ -10,6 +10,12 @@
 		  popup-transition="popup-fade">
 		  登录成功
 		</mt-popup>
+		<mt-popup
+		  v-model="popupVisible1"
+		  
+		  popup-transition="popup-fade">
+		  第一次登录，请先完善信息
+		</mt-popup>
 		<div class="top">
 			<img src="/static/img/school.png"/>
 		</div>
@@ -37,7 +43,8 @@
 				user:"",
 				psw:"",
 				remem:1,
-				popupVisible:false
+				popupVisible:false,
+				popupVisible1:false
 			}
 		},
 		methods:{
@@ -56,7 +63,8 @@
 				}).then((res)=>{
 					if(res.data.status=200){
 						var sdata=res.data.data;
-						var info={username:this.user,name:sdata.name,token:sdata.token}
+						//将信息存入sessionStorage
+						var info={username:this.user,name:sdata.name,token:sdata.token,imgUrl:sdata.photo_url}
 						var rinfo={username:this.user,password:this.psw}
 						if(this.remem==0){
 							//未勾选记住密码存入sessionStorage
@@ -72,10 +80,18 @@
 						}
 						var roleFirst={role:sdata.role,first:sdata.firstlogin}
 						sessionStorage.setItem("roleFirst",JSON.stringify(roleFirst));
-						this.popupVisible=true;
-						var interval = window.setTimeout(()=>{
-				        	this.$router.push("/self")
-				        }, 1000);
+						if(sdata.firstlogin==0){
+							this.popupVisible=true;
+							var interval = window.setTimeout(()=>{
+					        	this.$router.go(-1)
+					        }, 1000);
+						}else if(sdata.firstlogin==1){
+							this.popupVisible1=true;
+							var interval = window.setTimeout(()=>{
+					        	this.$router.push("/complete")
+					        }, 1000);
+						}
+						
 						
 					}
 					

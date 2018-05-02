@@ -36,7 +36,8 @@ export default {
     return {
      active:"tab1",
      choose:"curr",
-     choose2:""
+     choose2:"",
+     username:"ACMer"
     }
   },
   methods:{
