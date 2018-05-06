@@ -248,14 +248,14 @@ export default {
 		    background-size: cover;
 		    
 		    .pic{
-		    	width: 8rem;
+		    	width: 11rem;
 		    	height: 8rem;
-		    	border: 1px solid #029CE2;
+		    	//border: 1px solid #029CE2;
 		    	overflow: hidden;
 		    	margin-top: 1rem;
 		    	margin-bottom: 0.8rem;
 		    	background: #fefefe;
-		    	border-radius:100%;
+		    	//border-radius:100%;
 		    	img{
 		    		width: 100%;
 		    	}
@@ -273,12 +273,12 @@ export default {
 	  .monitor{
 	  	@extend .leader;
 	  	.pic{
-	    	width: 8rem;
+	    	width: 11rem;
 	    	height: 8rem;
-	    	border: 1px solid #029CE2;
+	    	//border: 1px solid #029CE2;
 	    	overflow: hidden;
 	    	background: #fefefe;
-	    	border-radius:100%;
+	    	//border-radius:100%;
 	    	img{
 	    		width: 100%;
 	    	}
@@ -312,14 +312,14 @@ export default {
 		    height: 9.37rem;
 		    padding-bottom: 0.8rem;
 		    .pic{
-		    	width: 6rem;
+		    	width: 8rem;
 		    	height: 6rem;
 		    	margin-top: 0.6rem;
 		    	margin-bottom: 0.4rem;
-		    	border: 1px solid #029CE2;
+		    	//border: 1px solid #029CE2;
 		    	overflow: hidden;
 		    	background: #fefefe;
-		    	border-radius:100%;
+		    	//border-radius:100%;
 		    	img{
 		    		width: 100%;
 		    	}
