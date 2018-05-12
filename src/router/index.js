@@ -10,6 +10,7 @@ import Complete from '@/components/Complete'
 import Contact from '@/components/Contact'
 import Control from '@/components/Control'
 import HeroDetail from '@/components/HeroDetail'
+import SoftDetail from '@/components/SoftDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -63,6 +64,11 @@ export default new Router({
       path: '/heroDetail/:heroid',
       name: 'HeroDetail',
       component: HeroDetail
+    },
+    {
+      path: '/softDetail/:softid',
+      name: 'SoftDetail',
+      component: SoftDetail
     }
   ]
 })
