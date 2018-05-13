@@ -361,13 +361,13 @@ export default {
 		}
 		//排行榜
 		.ranking{
-			width: 16.65rem;
+			width: 18rem;
 			margin: 0 auto;
 			height: 22rem;
 			margin-top: 0.3rem;
 			li{
 				height: 1.97rem;
-				border-bottom: 1px solid #d6d6d6;
+				border-bottom: 1px solid #fefefe;
 				font-size: 0.7rem;
 				line-height: 1.97rem;
 				color: #666;
@@ -382,16 +382,16 @@ export default {
 					background: #f5f5f5;
 				}
 				.name{
-					width: 3.85rem;
+					width: 4.2rem;
 				}
 				.major{
 					width: 4.8rem;
 				}
 				.solved{
-					width: 2.5rem;
+					width: 3.2rem;
 				}
 				.acrate{
-					width: 2.82rem;
+					width: 3.1rem;
 				}
 			}
 			.rankHead{

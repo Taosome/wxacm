@@ -11,6 +11,12 @@ import Contact from '@/components/Contact'
 import Control from '@/components/Control'
 import HeroDetail from '@/components/HeroDetail'
 import SoftDetail from '@/components/SoftDetail'
+import User from '@/components/controls/User'
+import Hero from '@/components/controls/Hero'
+import Award from '@/components/controls/Award'
+import Proj from '@/components/controls/Proj'
+import Lib from '@/components/controls/Lib'
+import We from '@/components/controls/We'
 Vue.use(Router)
 
 export default new Router({
@@ -69,6 +75,36 @@ export default new Router({
       path: '/softDetail/:softid',
       name: 'SoftDetail',
       component: SoftDetail
+    },
+    {
+      path: '/user',
+      name: 'User',
+      component: User
+    },
+    {
+      path: '/award',
+      name: 'Award',
+      component: Award
+    },
+    {
+      path: '/hero',
+      name: 'Hero',
+      component: Hero
+    },
+    {
+      path: '/proj',
+      name: 'Proj',
+      component: Proj
+    },
+    {
+      path: '/lib',
+      name: 'Lib',
+      component: Lib
+    },
+    {
+      path: '/we',
+      name: 'We',
+      component: We
     }
   ]
 })

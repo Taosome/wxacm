@@ -7,13 +7,14 @@
 		<div style="height: 2.6rem;"></div>
 		<h1>{{title}}</h1>
 		<h3><span class="team">西科信息ACM</span><span class="time">{{time}}</span><span class="views">{{view}}次浏览</span></h3>
-		<h4>编者<span>{{editor}}</span></h4>
+		
 		<div class="pic">
 			<img :src="address"/>
 		</div>
 		<div class="text" v-html="content">
 			
 		</div>
+		<h4>编者<span>{{editor}}</span></h4>
 	</div>
 </template>
 
@@ -44,7 +45,7 @@
 				params:{project_id:this.proID}
 			}).then((res)=>{
 				var sdata=res.data.data;
-				console.log(sdata)
+				
 				this.title=sdata.project_title;
 				this.time=sdata.time;
 				this.view=sdata.view;
@@ -109,7 +110,9 @@
 			color: #999;
 			font-size: 0.8rem;
 			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
 			font-weight: normal;
+			text-align: right;
 			span{
 				margin-left: 0.5rem;
 			}

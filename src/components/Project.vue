@@ -29,7 +29,7 @@
 		   	<ul class="awardList">
 		   		<li v-for="(item,index) in datalistG">
 		   			<img :src="baseUrl+'upload/member/'+item.picture" />
-		   			<p>{{item.contest_name}}<span>{{medals(item.medal)}}</span></p>
+		   			<p>{{item.contest_name}}<span :class="awards(item.medal)">{{medals(item.medal)}}</span></p>
 		   			<p>{{item.team_name}}</p>
 		   			<p>{{item.team_member}}</p>
 		   		</li>
@@ -38,7 +38,7 @@
 		   	<ul class="awardList">
 		   		<li v-for="(item,index) in datalistS">
 		   			<img :src="baseUrl+'upload/member/'+item.picture" />
-		   			<p>{{item.contest_name}}<span>{{medals(item.medal)}}</span></p>
+		   			<p>{{item.contest_name}}<span :class="awards(item.medal)">{{medals(item.medal)}}</span></p>
 		   			<p>{{item.team_name}}</p>
 		   			<p>{{item.team_member}}</p>
 		   		</li>
@@ -47,7 +47,7 @@
 		   	<ul class="awardList">
 		   		<li v-for="(item,index) in datalistB">
 		   			<img :src="baseUrl+'upload/member/'+item.picture" />
-		   			<p>{{item.contest_name}}<span>{{medals(item.medal)}}</span></p>
+		   			<p>{{item.contest_name}}<span :class="awards(item.medal)">{{medals(item.medal)}}</span></p>
 		   			<p>{{item.team_name}}</p>
 		   			<p>{{item.team_member}}</p>
 		   		</li>
@@ -118,6 +118,15 @@ export default {
   			return "银牌"
   		}else if(medal==2){
   			return "铜牌"
+  		}
+  	},
+  	awards(medal){
+  		if(medal==0){
+  			return "golden"
+  		}else if(medal==1){
+  			return "silveren"
+  		}else if(medal==2){
+  			return "bronzen"
   		}
   	},
   	//查看项目详情
@@ -234,9 +243,21 @@ export default {
 						display: inline-block;
 						width: 2rem;
 						height: 1rem;
-						border: 1px solid #ccc;
+						border: 2px solid #ccc;
 						margin-left: 0.2rem;
 						line-height: 1rem;
+					}
+					.golden{
+						color: #f3db92;
+						border-color: #f3db92;
+					}
+					.silveren{
+						color: #a9a9a9;
+						border-color: #a9a9a9;
+					}
+					.bronzen{
+						color: #dd833c;
+						border-color: #dd833c;
 					}
 				}
 			}
