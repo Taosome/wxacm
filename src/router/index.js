@@ -17,6 +17,7 @@ import Award from '@/components/controls/Award'
 import Proj from '@/components/controls/Proj'
 import Lib from '@/components/controls/Lib'
 import We from '@/components/controls/We'
+import AddHero from '@/components/controls/AddHero'
 Vue.use(Router)
 
 export default new Router({
@@ -105,6 +106,11 @@ export default new Router({
       path: '/we',
       name: 'We',
       component: We
+    },
+    {
+      path: '/addHero',
+      name: 'AddHero',
+      component: AddHero
     }
   ]
 })
