@@ -46,10 +46,6 @@
 				<td class="left">出题时间</td>
 				<td class="right">{{time}}</td>
 			</tr>
-			<tr>
-				<td class="left">出题单位</td>
-				<td class="right">{{lab}}</td>
-			</tr>
 		</table>
 		<p>示例图片</p>
 		<div class="galery" v-for="(info,index) in imgList">

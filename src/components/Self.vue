@@ -5,6 +5,7 @@
   	<div class="headcut">
   		<img :src="imgSrc" onerror="this.src='/static/img/default.jpg'"/>
   	</div>
+  	<p>{{somebody}}</p>
   	<div class="main">
   		<transition appear name="bounce">
   		<div class="item login" v-if="show">
@@ -49,8 +50,8 @@ export default {
       show:true,
       rights:0,
       someone:0,
-      somebody:"Welcome",
-      imgSrc:""
+      somebody:"未登录",
+      imgSrc:"",
     }
   },
   methods:{
@@ -64,7 +65,7 @@ export default {
   	if(sessionStorage.getItem("loginMsg")){
   		var loginMsg=JSON.parse(sessionStorage.getItem("loginMsg"));
   		this.someone=1;
-  		this.somebody=loginMsg.username;
+  		this.somebody=loginMsg.name;
   		this.imgSrc=loginMsg.imgUrl;
   		console.log(this.imgSrc)
   	}
@@ -109,6 +110,11 @@ export default {
 		img{
 			width: 100%;
 		}
+	}
+	p{
+		text-align: center;
+		margin-top: 1rem;
+		color: #333;
 	}
 	.main{
 		margin-top: 3rem;

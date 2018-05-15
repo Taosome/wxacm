@@ -14,7 +14,7 @@
 		<input type="text" v-model="author"/>
 		<p>出题人QQ</p>
 		<input type="text" v-model="qq_num"/>
-		<button>上传题目</button>
+		<button>添加题目</button>
 	</div>
 </template>
 
