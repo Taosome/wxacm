@@ -8,6 +8,12 @@
 		  	</div>
 		</div>
 		<div style="height: 2.6rem;"></div>
+		<mt-popup
+		  v-model="popupVisible"
+		  
+		  popup-transition="popup-fade">
+		  添加成功
+		</mt-popup>
 		<mt-tab-container v-model="active">
 		  <mt-tab-container-item id="tab3">
 		  	<div class="aidenty">
@@ -37,7 +43,7 @@
 			</div>
 			<div class="afile">
 				<span>上传头像</span>
-				<input type="file" name="ahead" />
+				<input type="file" name="afile" accept="image/png,image/jpg,image/jpeg" ref="file" @change="getFile1($event)" />
 			</div>
 			<div class="sex">
 				<mt-radio 
@@ -45,7 +51,7 @@
 				  :options="[{label:'男',value:'1'}, {label:'女',value:'0'}]">
 				</mt-radio>
 			</div>
-			<button class="qrtj">确认添加</button>
+			<button class="qrtj" @click="aconfirm">确认添加</button>
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="tab4">
 			<div class="part2">   	
@@ -68,7 +74,7 @@
 			   	<input type="text" v-model="lang" placeholder="最多两种，空格隔开"/>
 			   	<div class="sfile">
 					<span>上传头像</span>
-					<input type="file" name="shead" />
+					<input type="file" name="sfile" accept="image/png,image/jpg,image/jpeg" ref="file" @change="getFile2($event)" />
 				</div>
 				<div class="sex">
 					<mt-radio 
@@ -76,7 +82,7 @@
 					  :options="[{label:'男',value:'1'}, {label:'女',value:'0'}]">
 					</mt-radio>
 				</div>
-				<button class="qrtj">确认添加</button>
+				<button class="qrtj" @click="sconfirm">确认添加</button>
 			</div>
 		  </mt-tab-container-item>
 		</mt-tab-container>
@@ -91,9 +97,9 @@
 				active:"tab3",
 			    choose:"curr",
 			    choose2:"",
+			    popupVisible:false,
 			    identy:"0",
 			    acmName:"",
-			    isMonitor:true,
 			    moniLevel:"",
 			    aClass:"",
 			    agender:"1",
@@ -104,7 +110,9 @@
 			    sYear:"",
 			    direction:"",
 			    lang:"",
-			    sgender:"1"
+			    sgender:"1",
+			    afiles:"",
+			    sfiles:""
 			}
 		},
 		methods:{
@@ -120,13 +128,99 @@
 		  		this.active="tab4"
 		  		this.choose2="curr",
 		      	this.choose=""
+		  	},
+		  	//acm头像改变
+		  	getFile1(e){
+		  		this.afiles=e.target.files[0];
+		  	},
+		  	//添加acm
+		  	aconfirm(){
+		  		var token=JSON.parse(sessionStorage.getItem("loginMsg")).token;
+		  		if(this.identy==0){
+		  			this.moniLevel=0
+		  		}
+				let formData = new FormData();
+	            formData.append('name',this.acmName);
+	            formData.append('admission_year',this.aYear);
+	            formData.append('role',this.moniLevel);
+	            formData.append('major_class',this.aClass);
+	            formData.append('gender',Number(this.agender));
+	            formData.append('file',this.afiles);
+                this.$axios({
+                	method:"post",
+                	url:"/wxacm_admin/addAcmMember",
+                	headers:{
+                		 'Content-Type': 'multipart/form-data'
+                	},
+                	data:formData,
+                	params:{
+                		token:token
+                	}
+                }).then((res)=>{
+                	this.popupVisible=true;
+					var interval = window.setTimeout(()=>{
+			        	this.popupVisible=false;
+			        	Object.assign(this.$data, this.$options.data())
+			        }, 1000);
+                })
+		  	},
+		  	//soft头像改变
+		  	getFile2(e){
+		  		this.sfiles=e.target.files[0];
+		  	},
+		  	//添加soft
+		  	sconfirm(){
+		  		var token=JSON.parse(sessionStorage.getItem("loginMsg")).token;
+				let formData = new FormData();
+	            formData.append('name',this.softName);
+	            formData.append('admission_year',this.sYear);
+	            formData.append('study_direction',this.direction);
+	            formData.append('programing_language',this.lang);
+	            formData.append('master',this.master);
+	            formData.append('major_class',this.sClass);
+	            formData.append('gender',Number(this.sgender));
+	            formData.append('file',this.sfiles);
+                this.$axios({
+                	method:"post",
+                	url:"/wxsoft_admin/addSoftMember",
+                	headers:{
+                		 'Content-Type': 'multipart/form-data'
+                	},
+                	data:formData,
+                	params:{
+                		token:token
+                	}
+                }).then((res)=>{
+                	this.popupVisible=true;
+					var interval = window.setTimeout(()=>{
+			        	this.popupVisible=false;
+			        	Object.assign(this.$data, this.$options.data())
+			        }, 1000);
+                })
 		  	}
+		},
+		computed:{
+			isMonitor(){
+				if(this.identy==0){
+					return false;
+				}else{
+					return true;
+				}
+			}
 		}
 	}
 </script>
 
 <style scoped="scoped" lang="scss">
 	#lib{
+		.mint-popup{
+			background: rgba(240,240,240,0.8);
+			color: #029CE2;
+			line-height: 2.5;
+			width: 100%;
+			text-align: center;
+			font-size: 0.8rem;
+		}
 		//acm样式
 		.aidenty{
 			border-bottom: 1px solid #f1f1f1;

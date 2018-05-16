@@ -67,7 +67,6 @@
 						this.soft_email=sdata.soft_email;
 						this.soft_address=sdata.soft_address;
 					}
-					
 				})
 			}
 		}

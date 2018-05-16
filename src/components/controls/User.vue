@@ -36,7 +36,7 @@
 	   			<span class="stu_id">{{info.stu_id}}</span>
 	   			<span class="major">{{info.major_class}}</span>
 	   			<span class="rights">
-	   				<select v-model="info.role" @change="changeRole($event,info.user_id)" :disabled="banned(info.role)">
+	   				<select v-model="info.role" @change="changeRole($event,info.user_id)" :disabled="banned">
 	   					<option value="0">ROOT</option>
 	   					<option value="1">Admin</option>
 	   					<option value="2">User</option>
@@ -64,7 +64,8 @@
 				num:1,
 				pages:0,
 				disabled:false,
-				living:true
+				living:true,
+				role:""
 			}
 		},
 		methods:{
@@ -145,14 +146,7 @@
 		  	goDetail(id){
 		  		this.$router.push({name:'RankDetail',params:{id:id}})
 		  	},
-		  	//是否具备修改权限资格
-		  	banned(role){
-		  		if(role==0){
-		  			return true;
-		  		}else{
-		  			return false;
-		  		}
-		  	},
+		  	
 		  	//修改权限
 		  	changeRole(e,id){
 		  		var newRole=e.target.value;
@@ -178,6 +172,17 @@
 		},
 		mounted(){
 			this.getData();
+			this.role=JSON.parse(sessionStorage.getItem("roleFirst")).role
+		},
+		computed:{
+			//是否具备修改权限资格
+		  	banned(){
+		  		if(this.role==0){
+		  			return false;
+		  		}else{
+		  			return true;
+		  		}
+		  	}
 		}
 	}
 </script>

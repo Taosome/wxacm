@@ -28,7 +28,7 @@
 		   	<h3 class="gold">——————金牌——————</h3>
 		   	<ul class="awardList">
 		   		<li v-for="(item,index) in datalistG">
-		   			<img :src="baseUrl+'upload/member/'+item.picture" />
+		   			<img :src="baseUrl+'upload/honor/'+item.picture" />
 		   			<p>{{item.contest_name}}<span :class="awards(item.medal)">{{medals(item.medal)}}</span></p>
 		   			<p>{{item.team_name}}</p>
 		   			<p>{{item.team_member}}</p>
@@ -37,7 +37,7 @@
 		   	<h3 class="silver">——————银牌——————</h3>
 		   	<ul class="awardList">
 		   		<li v-for="(item,index) in datalistS">
-		   			<img :src="baseUrl+'upload/member/'+item.picture" />
+		   			<img :src="baseUrl+'upload/honor/'+item.picture" />
 		   			<p>{{item.contest_name}}<span :class="awards(item.medal)">{{medals(item.medal)}}</span></p>
 		   			<p>{{item.team_name}}</p>
 		   			<p>{{item.team_member}}</p>
@@ -46,7 +46,7 @@
 		   	<h3 class="bronze">——————铜牌——————</h3>
 		   	<ul class="awardList">
 		   		<li v-for="(item,index) in datalistB">
-		   			<img :src="baseUrl+'upload/member/'+item.picture" />
+		   			<img :src="baseUrl+'upload/honor/'+item.picture" />
 		   			<p>{{item.contest_name}}<span :class="awards(item.medal)">{{medals(item.medal)}}</span></p>
 		   			<p>{{item.team_name}}</p>
 		   			<p>{{item.team_member}}</p>
@@ -57,7 +57,7 @@
 		  	<h2>我们的项目案例</h2>
 		   	<ul class="proList">
 		   		<li v-for="(item,index) in datalist" @click="toprodetail(item.project_id)">
-		   			<img :src="baseUrl+'upload/member/'+item.project_head_pic" />
+		   			<img :src="baseUrl+'upload/project/'+item.project_head_pic" />
 		   			<p>{{item.project_title}}</p>
 		   		</li>
 		   	</ul>

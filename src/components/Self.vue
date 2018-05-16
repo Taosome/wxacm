@@ -67,7 +67,7 @@ export default {
   		this.someone=1;
   		this.somebody=loginMsg.name;
   		this.imgSrc=loginMsg.imgUrl;
-  		console.log(this.imgSrc)
+  		//console.log(this.imgSrc)
   	}
   	if(sessionStorage.getItem("roleFirst")){
   		var roleFirst=JSON.parse(sessionStorage.getItem("roleFirst"));
