@@ -6,11 +6,15 @@ import 'mint-ui/lib/style.css'
 import App from './App'
 import "./font/iconfont.css"
 import "./css/reset.css"
+
 import router from './router'
 import axios from 'axios';
 import qs from 'qs';
 Vue.config.productionTip = false
-
+import '../static/utf8-jsp/ueditor.config.js'
+import '../static/utf8-jsp/ueditor.all.min.js'
+import '../static/utf8-jsp/lang/zh-cn/zh-cn.js'
+import '../static/utf8-jsp/ueditor.parse.min.js'
 /* eslint-disable no-new */
 Vue.use(MintUI);
 //axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'

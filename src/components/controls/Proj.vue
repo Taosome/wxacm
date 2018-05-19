@@ -11,26 +11,47 @@
 		  popup-transition="popup-fade">
 		  添加成功
 		</mt-popup>
-		<VueUEditor></VueUEditor>
+		<Ue :value="ueditor.value" :config="ueditor.config" ref="ue"></Ue>
+		<input type="button" value="显示编辑器内容（从控制台查看）" @click="returnContent">
 	</div>
 </template>
 
 <script>
-	import VueUEditor from 'vue-ueditor'
+
+	import Ue from '@/components/Ue.vue'
 	export default{
 		name:"Proj",
 		components:{
-			VueUEditor
+			Ue
 		},
 		data(){
 			return{
-				popupVisible:false
+				popupVisible:false,
+				content:"",
+				ueditor: {
+		          	value: '编写项目成果详情',
+		          	config: {
+		          		initialFrameWidth: null,
+         				initialFrameHeight: 300
+		          	}
+		        },
+				editor: null
 			}
 		},
 		methods:{
 			back(){
 				this.$router.go(-1)
-			}
+			},
+			returnContent(){
+		        this.content = this.$refs.ue.getUEContent()
+		        console.log(this.content)
+		    },
+		    gettext() {
+	                　　	console.log(this.editor.getContent())
+	           　　	}
+		},
+		mounted(){
+			
 		}
 	}
 </script>
