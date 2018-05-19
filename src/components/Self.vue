@@ -86,7 +86,7 @@ export default {
 		width: 100%;
 		background: url("/static/img/wxbg.jpg") no-repeat;
 		background-size: cover;
-		overflow: hidden;
+		padding-top: 1px;
 		height: 100%;
 	}
 	.top{
@@ -118,7 +118,9 @@ export default {
 	}
 	.main{
 		margin-top: 3rem;
+		
 		padding: 0 0.5rem;
+		
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-around;

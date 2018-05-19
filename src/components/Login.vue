@@ -4,6 +4,7 @@
 			<i class="iconfont icon-jiantou2" @click="back"></i>
 			<h2>登&nbsp;&nbsp;录</h2>
 		</div>
+		<div style="height: 2.6rem;"></div>
 		<mt-popup
 		  v-model="popupVisible"
 		  
@@ -121,14 +122,17 @@
 
 <style scoped="scoped" lang="scss">
 	#login{
-		height: 100%;
+		width: 100%;
+		min-height: 100%;
+		height: auto;
 		background: url("/static/img/wxbg4.jpg") no-repeat;
 		background-size: cover;
+		padding-top: 1px;
 	}
 	.head{
 		display: block;
 		padding: 0 1rem;
-		position: relative;
+		position: fixed;
 		background: none;
 		i{
 			position: absolute;
@@ -164,6 +168,7 @@
 	}
 	.main{
 		padding: 0 2rem;
+		padding-bottom: 6rem;
 		p{
 			color: #029CE2;
 			font-size: 1.2rem;
